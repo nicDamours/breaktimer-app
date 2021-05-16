@@ -31,6 +31,7 @@ const defaultSettings: Settings = {
   backgroundColor: '#16a085',
   textColor: '#ffffff',
   endBreakEnabled: true,
+  integrations: {}
 }
 
 interface IStore {

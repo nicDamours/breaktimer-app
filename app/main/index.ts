@@ -10,6 +10,7 @@ import {setAutoLauch} from './lib/auto-launch'
 import {showNotification} from './lib/notifications'
 import {initTray} from './lib/tray'
 import './lib/ipc'
+import {initIntegrations} from "./lib/integrations"
 
 const gotTheLock = app.requestSingleInstanceLock()
 
@@ -94,6 +95,7 @@ app.on('ready', async () => {
 
   initBreaks()
   initTray()
+  initIntegrations()
   createSoundsWindow()
 
   if (process.env.NODE_ENV !== 'development' && process.platform !== 'win32') {

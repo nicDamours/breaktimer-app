@@ -54,3 +54,31 @@ ipcMain.on(IpcChannel.GET_BREAK_END_TIME, (event: IpcMainEvent): void => {
     event.reply(IpcChannel.ERROR, err.message)
   }
 })
+
+ipcMain.on(IpcChannel.DISPLAY_BROWSER_WINDOW, async (event: IpcMainEvent, url: string): Promise<void> => {
+  log.info(IpcChannel.DISPLAY_BROWSER_WINDOW)
+
+  try {
+    let authWindow = new BrowserWindow({
+      "width": 800,
+      "height": 600,
+      "show": false,
+    })
+
+    await authWindow.loadURL(url)
+    authWindow.show()
+    let responseUrl = null
+    authWindow.webContents.on('will-navigate', (browserEvent, newUrl) => {
+      responseUrl = newUrl
+      authWindow.close()
+    })
+
+    authWindow.on('closed', () => {
+      event.reply(IpcChannel.DISPLAY_BROWSER_WINDOW_SUCCESS, responseUrl)
+    })
+
+  } catch (err)  {
+    log.error(err)
+    event.reply(IpcChannel.ERROR, err.message)
+  }
+})

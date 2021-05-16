@@ -1,3 +1,5 @@
+import {IntegrationsSettings} from "./integrations/integrationsSettings"
+
 export enum NotificationType {
   Notification = "NOTIFICATION",
   Popup = "POPUP"
@@ -37,4 +39,5 @@ export interface Settings {
   backgroundColor: string
   textColor: string
   endBreakEnabled: boolean
+  integrations: {[key: string]: IntegrationsSettings}
 }

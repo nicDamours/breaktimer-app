@@ -8,6 +8,7 @@ import {getSettings} from './store'
 import {buildTray} from './tray'
 import {showNotification} from './notifications'
 import {createBreakWindows} from './windows'
+import {runIntegrationBreakEndHook, runIntegrationBreakStartHook} from "./integrations"
 
 let powerMonitor: PowerMonitor
 let breakTime: BreakTime = null
@@ -119,6 +120,8 @@ function beginPopupBreak(): void {
   if (settings.gongEnabled) {
     sendIpc(IpcChannel.PLAY_START_GONG)
   }
+
+  runIntegrationBreakStartHook().then()
 }
 
 export function endPopupBreak(): void {
@@ -136,6 +139,8 @@ export function endPopupBreak(): void {
       sendIpc(IpcChannel.PLAY_START_GONG)
     }
   }
+
+  runIntegrationBreakEndHook().then()
 }
 
 function doBreak(): void {

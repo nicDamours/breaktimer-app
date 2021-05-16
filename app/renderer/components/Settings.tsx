@@ -8,6 +8,7 @@ import {Settings, NotificationType, NotificationClick} from "../../types/setting
 import {IpcChannel} from "../../types/ipc"
 import {toast} from "../toaster"
 import SettingsHeader from './SettingsHeader'
+import IntegrationSettingsEl from "./integrations/Integrations"
 const styles = require('./Settings.scss')
 
 export default function SettingsEl() {
@@ -63,6 +64,12 @@ export default function SettingsEl() {
   const handleSwitchChange = (field: string, e: React.ChangeEvent<HTMLInputElement>): void => {
     const newSettings = {...settings}
     newSettings[field] = e.target.checked
+    setSettings(newSettings)
+  }
+
+  const updateIntegrationSetting = (integrationName, integrationSettings) => {
+    const newSettings = {...settings, integrations: integrationSettings}
+
     setSettings(newSettings)
   }
 
@@ -223,6 +230,7 @@ export default function SettingsEl() {
                 <FormGroup>
                   <Button onClick={handleResetColors}>Reset colors</Button>
                 </FormGroup>
+                <IntegrationSettingsEl settings={settings} updateIntegrationSetting={updateIntegrationSetting} />
               </React.Fragment>
             )}
           />
