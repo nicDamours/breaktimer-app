@@ -5,6 +5,6 @@ export interface DiscordSettings extends IntegrationsSettings {
   refresh_token: string
   token_expiring_date: number
   targetBotUrl: string
-  target_guild: string
+  targetGuild: string
   suffix: string
 }

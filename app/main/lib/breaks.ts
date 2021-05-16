@@ -138,9 +138,10 @@ export function endPopupBreak(): void {
       // sendIpc(IpcChannel.PLAY_END_GONG)
       sendIpc(IpcChannel.PLAY_START_GONG)
     }
-  }
 
-  runIntegrationBreakEndHook().then()
+    console.log('popup end')
+    runIntegrationBreakEndHook().then()
+  }
 }
 
 function doBreak(): void {

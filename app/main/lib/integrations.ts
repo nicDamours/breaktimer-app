@@ -23,12 +23,10 @@ export function initIntegrations(): void {
 }
 
 export function getIntegrationDefaultSettings(): { [key: string]: IntegrationsSettings } {
-  const integrationsSettings = getPossibleIntegrations().reduce((collector, item) => ({
+  return getPossibleIntegrations().reduce((collector, item) => ({
     ...collector,
     [item.getIntegrationKey()]: item.getIntegrationDefaultSettings()
   }), {})
-
-  return integrationsSettings
 }
 
 export async function runIntegrationBreakStartHook(): Promise<void> {

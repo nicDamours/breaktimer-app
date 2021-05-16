@@ -1,5 +1,7 @@
+import axios  from "axios"
 import {BaseIntegration} from "../BaseIntegration"
 import {DiscordSettings} from "../../../../types/integrations/discord"
+import {getSettings} from "../../store"
 
 export class DiscordIntegration extends BaseIntegration {
   constructor() {
@@ -7,11 +9,12 @@ export class DiscordIntegration extends BaseIntegration {
   }
 
   async handleBreakStart(): Promise<any> {
-    super.handleBreakStart()
+    await this.pingBotToChangeNickname()
   }
 
   async handleBreakEnd(): Promise<any> {
-    super.handleBreakEnd()
+    await this.pingBotToChangeNickname()
+
   }
 
   public getIntegrationKey(): string {
@@ -24,9 +27,26 @@ export class DiscordIntegration extends BaseIntegration {
       "access_token": "",
       "suffix": "",
       "refresh_token": "",
-      "target_guild": "",
+      "targetGuild": "",
       "targetBotUrl": "",
       "token_expiring_date": 0
+    }
+  }
+
+  pingBotToChangeNickname(): Promise<void> {
+    try {
+      const settings = getSettings()
+      const integrationSettings: DiscordSettings = settings.integrations.discord as DiscordSettings
+
+      return axios.patch(`${integrationSettings.targetBotUrl}nickname/${integrationSettings.targetGuild}`, {
+        suffix: integrationSettings.suffix
+      }, {
+        headers: {
+          "Authorization": `Bearer ${integrationSettings.access_token}`
+        }
+      })
+    } catch (e) {
+      console.log(e.message, e.response.data.message)
     }
   }
 }

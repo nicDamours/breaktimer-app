@@ -61,7 +61,8 @@ export default function DiscordSettingsEl({settings, updateSetting}: SettingComp
   }
 
   const handleTargetGuildChange = (event) => {
-    updateSetting.call({}, 'discord', 'target_guild', event.currentTarget.value)
+    console.log(event.currentTarget.value)
+    updateSetting.call({}, 'discord', event.currentTarget.value, 'targetGuild')
   }
 
   const renderDiscordSettings = () => {
@@ -96,7 +97,7 @@ export default function DiscordSettingsEl({settings, updateSetting}: SettingComp
         <FormGroup label="Server">
           <HTMLSelect
             options={discordServers}
-            value={settings.target_guild}
+            value={settings.targetGuild}
             onChange={handleTargetGuildChange.bind(null)}
           />
         </FormGroup>

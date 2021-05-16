@@ -42,10 +42,17 @@ export class DiscordService {
           }
         })
 
-        const servers =  data.map(item => ({
-          label: item.name,
-          value: item.id
-        }))
+        const servers = [
+          ...[{
+            label: "No value",
+            value: "0"
+          }],
+          ...data.map(item => ({
+            label: item.name,
+            value: item.id
+          }))]
+
+        console.log(servers)
 
         DiscordLocalStorageService.cacheServerData(servers)
 
