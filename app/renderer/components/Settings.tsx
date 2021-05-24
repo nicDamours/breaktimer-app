@@ -69,7 +69,6 @@ export default function SettingsEl() {
 
   const updateIntegrationSetting = (integrationName, integrationSettings) => {
     const newSettings = {...settings, integrations: integrationSettings}
-    console.log('newSettings', newSettings)
     setSettings(newSettings)
   }
 

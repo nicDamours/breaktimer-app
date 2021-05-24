@@ -15,24 +15,17 @@ const components = {
 }
 
 export default function IntegrationSettingsGroupEl({name, integrationSettings, updateSetting}: Props) {
-
-  const [isOpen, setOpen] = React.useState<boolean>(integrationSettings.enabled)
-
   const handleSettingEnabledChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     const targetChecked = e.currentTarget.checked
-    setOpen(targetChecked)
+
     updateSetting.call({}, name, targetChecked, 'enabled')
   }
 
   const SettingComponentName = components[name]
 
-  const handleGroupCollapseToggle = () => {
-    setOpen(!isOpen)
-  }
-
   return (
     <FormGroup>
-      <Navbar onClick={handleGroupCollapseToggle.bind(null)}>
+      <Navbar>
         <Navbar.Group align={Alignment.LEFT}>
           <Navbar.Heading>{name}</Navbar.Heading>
         </Navbar.Group>
@@ -40,7 +33,7 @@ export default function IntegrationSettingsGroupEl({name, integrationSettings, u
           <Switch checked={integrationSettings.enabled} onChange={handleSettingEnabledChange.bind(null)} />
         </Navbar.Group>
       </Navbar>
-      <Collapse isOpen={isOpen} keepChildrenMounted={true}>
+      <Collapse isOpen={integrationSettings.enabled} keepChildrenMounted={true}>
         <div className={styles.integrationGroup}>
           <SettingComponentName settings={integrationSettings} updateSetting={updateSetting} />
         </div>
