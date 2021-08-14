@@ -18,6 +18,9 @@ function getActiveIntegrations(): BaseIntegration[] {
 }
 
 export function initIntegrations(): void {
+  const settings: Settings = getSettings()
+  IntegrationCacheManager.getInstance().initIntegrationsSettings({...settings}, getPossibleIntegrations())
+
   IntegrationCacheManager.getInstance().registerIntegrations(getActiveIntegrations())
   IntegrationCacheManager.getInstance().getRegisteredIntegrations().forEach(integration => integration.setup())
 }

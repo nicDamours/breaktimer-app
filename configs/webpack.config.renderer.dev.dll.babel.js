@@ -10,6 +10,7 @@ import merge from 'webpack-merge';
 import baseConfig from './webpack.config.base';
 import { dependencies } from '../package.json';
 import CheckNodeEnv from '../internals/scripts/CheckNodeEnv';
+import * as dotenv from "dotenv"
 
 CheckNodeEnv('development');
 
@@ -58,7 +59,10 @@ export default merge.smart(baseConfig, {
      * development checks
      */
     new webpack.EnvironmentPlugin({
-      NODE_ENV: 'development'
+      NODE_ENV: 'development',
+      ...dotenv.config({
+        path: './app/renderer/.env'
+      }).parsed
     }),
 
     new webpack.LoaderOptionsPlugin({

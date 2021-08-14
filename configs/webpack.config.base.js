@@ -44,7 +44,9 @@ export default {
   plugins: [
     new webpack.EnvironmentPlugin({
       NODE_ENV: 'production',
-        ...dotenv.config().parsed
+      ...dotenv.config({
+        path: './app/main/.env'
+      }).parsed
     }),
 
     new webpack.NamedModulesPlugin()

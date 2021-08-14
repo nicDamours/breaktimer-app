@@ -41,7 +41,14 @@ export class DiscordIntegration extends BaseIntegration {
 
       let accessToken = integrationSettings.access_token
 
-      const discordService = new DiscordAuthService(integrationSettings.refresh_token, integrationSettings.token_expiring_date)
+      const discordService = new DiscordAuthService(
+        process.env.DISCORD_API_URL,
+        process.env.DISCORD_CLIENT_ID,
+        process.env.DISCORD_CLIENT_SECRET,
+        process.env.DISCORD_REDIRECT_URI,
+        integrationSettings.refresh_token,
+        integrationSettings.token_expiring_date
+      )
 
       if (discordService.isTokenDueForRefresh()) {
         const refreshResponse = await discordService.attemptRefresh()

@@ -39,5 +39,5 @@ export interface Settings {
   backgroundColor: string
   textColor: string
   endBreakEnabled: boolean
-  integrations: {[key: string]: IntegrationsSettings}
+  integrations?: {[key: string]: IntegrationsSettings}
 }

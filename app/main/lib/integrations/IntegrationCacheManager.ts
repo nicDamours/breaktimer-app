@@ -1,4 +1,6 @@
 import {BaseIntegration} from "./BaseIntegration"
+import {Settings} from "../../../types/settings"
+import {setSettings} from "../store"
 
 export class IntegrationCacheManager {
 
@@ -22,5 +24,24 @@ export class IntegrationCacheManager {
 
   public getRegisteredIntegrations(): BaseIntegration[] {
     return this.registeredIntegrations
+  }
+
+  public initIntegrationsSettings(settings: Settings, possibleIntegrations: BaseIntegration[]): void {
+    let hasChanges = false
+    if (settings && !('integrations' in settings)) {
+      settings.integrations = {}
+      hasChanges = true
+    }
+    possibleIntegrations.forEach((integration) => {
+      if (!(integration.getIntegrationKey() in settings.integrations)) {
+        settings.integrations[integration.getIntegrationKey()] = {enabled: false}
+        hasChanges = true
+      }
+    })
+
+    if (hasChanges) {
+      console.log(' settings to be updated', settings)
+      setSettings(settings)
+    }
   }
 }

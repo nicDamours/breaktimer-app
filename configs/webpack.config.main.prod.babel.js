@@ -9,6 +9,7 @@ import TerserPlugin from 'terser-webpack-plugin';
 import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
 import baseConfig from './webpack.config.base';
 import CheckNodeEnv from '../internals/scripts/CheckNodeEnv';
+import * as dotenv from "dotenv"
 
 CheckNodeEnv('production');
 
@@ -57,7 +58,10 @@ export default merge.smart(baseConfig, {
     new webpack.EnvironmentPlugin({
       NODE_ENV: 'production',
       DEBUG_PROD: false,
-      START_MINIMIZED: false
+      START_MINIMIZED: false,
+      ...dotenv.config({
+        path: './app/main/.env'
+      }).parsed
     })
   ],
 

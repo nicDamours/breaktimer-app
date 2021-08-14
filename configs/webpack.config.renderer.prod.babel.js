@@ -11,6 +11,7 @@ import merge from 'webpack-merge';
 import TerserPlugin from 'terser-webpack-plugin';
 import baseConfig from './webpack.config.base';
 import CheckNodeEnv from '../internals/scripts/CheckNodeEnv';
+import * as dotenv from "dotenv"
 
 CheckNodeEnv('production');
 export default merge.smart(baseConfig, {
@@ -199,7 +200,10 @@ export default merge.smart(baseConfig, {
      * development checks
      */
     new webpack.EnvironmentPlugin({
-      NODE_ENV: 'production'
+      NODE_ENV: 'production',
+      ...dotenv.config({
+        path: './app/renderer/.env'
+      }).parsed
     }),
 
     new MiniCssExtractPlugin({

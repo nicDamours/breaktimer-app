@@ -15,6 +15,7 @@ import merge from 'webpack-merge';
 import { spawn, execSync } from 'child_process';
 import baseConfig from './webpack.config.base';
 import CheckNodeEnv from '../internals/scripts/CheckNodeEnv';
+import * as dotenv from "dotenv"
 
 CheckNodeEnv('development');
 
@@ -214,7 +215,11 @@ export default merge.smart(baseConfig, {
      * 'staging', for example, by changing the ENV variables in the npm scripts
      */
     new webpack.EnvironmentPlugin({
-      NODE_ENV: 'development'
+      NODE_ENV: 'development',
+      ...dotenv.config({
+        debug: true,
+        path: './app/renderer/.env'
+      }).parsed
     }),
 
     new webpack.LoaderOptionsPlugin({

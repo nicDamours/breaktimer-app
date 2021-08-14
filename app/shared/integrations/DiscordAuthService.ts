@@ -1,15 +1,27 @@
 import axios, {AxiosPromise} from "axios"
 
 export class DiscordAuthService {
-  protected readonly DISCORD_API_URL = process.env.DISCORD_API_URL
-  protected readonly DISCORD_CLIENT_ID = process.env.DISCORD_CLIENT_ID
-  protected readonly DISCORD_CLIENT_SECRET = process.env.DISCORD_CLIENT_SECRET
-  protected readonly DISCORD_REDIRECT_URI = process.env.DISCORD_REDIRECT_URI
+  protected DISCORD_API_URL;
+  protected DISCORD_CLIENT_ID;
+  protected DISCORD_CLIENT_SECRET;
+  protected DISCORD_REDIRECT_URI;
 
   protected refreshToken: string | null
   protected tokenExpiring: number | null
 
-  constructor(refreshToken?: string, tokenExpiring?: number) {
+  constructor(
+    discordApiUrl: string,
+    discordClientId: string,
+    discordClientSecret: string,
+    discordRedirectUri: string,
+    refreshToken?: string,
+    tokenExpiring?: number
+  ) {
+    this.DISCORD_API_URL = discordApiUrl
+    this.DISCORD_CLIENT_ID = discordClientId
+    this.DISCORD_CLIENT_SECRET = discordClientSecret
+    this.DISCORD_REDIRECT_URI = discordRedirectUri
+
     this.refreshToken = refreshToken
     this.tokenExpiring = tokenExpiring
   }

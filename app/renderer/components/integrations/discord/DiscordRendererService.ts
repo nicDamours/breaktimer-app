@@ -10,7 +10,13 @@ export class DiscordRendererService extends DiscordAuthService {
     accessToken?: string,
     refreshToken?: string,
     tokenExpiring?: number) {
-    super(refreshToken, tokenExpiring)
+    super(
+      process.env.REACT_APP_DISCORD_API_URL,
+      process.env.REACT_APP_DISCORD_CLIENT_ID,
+      process.env.REACT_APP_DISCORD_CLIENT_SECRET,
+      process.env.REACT_APP_DISCORD_REDIRECT_URI,
+      refreshToken,
+      tokenExpiring)
 
     this.accessToken = accessToken
     this.updateSettingFunction = updateSettingFunction
